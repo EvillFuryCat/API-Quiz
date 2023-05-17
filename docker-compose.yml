@@ -1,4 +1,4 @@
-version: '1.1'
+version: '3.5'
 
 services:
   api:
@@ -7,9 +7,17 @@ services:
       - ~/.ssh:/root/.ssh
       - ~/.bash_history:/root/.bash_history
       - .:/app
+    ports:
+      - 8000:8000
     depends_on:
       - db
-    command: python3 app.py
+    environment:
+      DATABASE_NAME: postgres
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
   db:
     image: postgres:15.2
@@ -17,12 +25,9 @@ services:
       - postgres_data:/var/lib/postgresql/data/
       - .:/app
     ports:
-      - 5433:5432
+      - 5431:5432
     environment:
-      DATABASE_NAME: quiz_db
-      DATABASE_USER: postgres
-      DATABASE_PASSWORD: postgres
-      DATABASE_HOST: db
-      DATABASE_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
 volumes:
   postgres_data:

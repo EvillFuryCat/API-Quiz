@@ -1,6 +1,9 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, TIMESTAMP
-from .database_config import Base, engine
+from sqlalchemy.ext.declarative import declarative_base
+from .database_config import engine
+
+Base = declarative_base()
 
 
 class Question(Base):

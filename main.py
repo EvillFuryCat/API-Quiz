@@ -9,7 +9,7 @@ app = FastAPI(title="Quiz")
 
 
 @app.post("/quiz", response_model=QuestionOut)
-async def getquizquestions(questions_num: QuestionBase) -> QuestionOut:
+async def get_quiz_questions(questions_num: QuestionBase) -> QuestionOut:
     with SessionLocal() as db:
         question = None
         while question is None:

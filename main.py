@@ -19,7 +19,9 @@ async def get_quiz_questions(questions_num: QuestionBase) -> QuestionOut:
             questions = response.json()
             for q in questions:
                 qrecord = (
-                    db.query(Question).filter(Question.question == q["question"]).first()
+                    db.query(Question)
+                    .filter(Question.question == q["question"])
+                    .first()
                 )
                 if qrecord is None:
                     question = Question(question=q["question"], answer=q["answer"])
